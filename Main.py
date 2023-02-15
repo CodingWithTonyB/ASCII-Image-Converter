@@ -1,7 +1,7 @@
 from PIL import Image, ImageDraw, ImageFont
 import math
 
-path = r"C:\Users\Crypt\Desktop\Pictures\photo_2023-02-14_13-36-21.jpg"
+path = r"ASCII\ASCII Image Converter\car.jpg"
 
 chars = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'. "[::-1]
 # chars = "#Wo- "[::-1]
@@ -9,7 +9,7 @@ charArray = list(chars)
 charLength = len(charArray)
 interval = charLength/256
 
-scaleFactor = 0.0001
+scaleFactor = 0.1
 
 #0 is regular for brightness 
 # adding brightness just increases 
