@@ -21,19 +21,17 @@ pygame.display.set_caption("Image to ASCII converter")
 #Image Variables
 loaded = False
 
-# Set up font and text for the drop zone
+# Set up font and text
 font = pygame.font.Font(None, 30)
-text = font.render("Drop a photo here", True, (255, 255, 255))
+font_select = pygame.font.Font(None, 15)
+text_drop = font.render("Drop a photo here", True, (255, 255, 255))
+text_select = font_select.render("Select File", True, (255, 255, 255))
 
 # Set up the allowed file extensions
 allowed_extensions = [".jpg", ".png"]
 
 def handleError():
-    pygame.time.set_timer(pygame.USEREVENT, 3000) # Set timer for 3 seconds
-    error_text = font.render("Invalid file type", True, (255, 0, 0))
-    error_rect = error_text.get_rect(center=drop_zone_rect.center)
-    window.blit(error_text, error_rect)
-    pygame.display.update()
+    print('invalid file type')
 
 # Define a function to handle dropping files
 def handle_drop_file(file_path):
@@ -43,6 +41,12 @@ def handle_drop_file(file_path):
         runASCII(file_path)
     else:
         handleError()
+
+
+# Set up the button to select using file
+select_using_file_rect = pygame.Rect(15,10,70,20)
+select_using_color = (130, 130, 130)
+select_using_highlight_color = (150, 150, 150)
 
 # Set up the drop zone rectangle
 drop_zone_rect = pygame.Rect(rect_start_x, rect_start_y, 
@@ -65,7 +69,7 @@ while True:
         # Handle mouse button down events
         if event.type == pygame.MOUSEBUTTONDOWN:
             if event.button == 1:
-                if drop_zone_rect.collidepoint(event.pos):
+                if select_using_file_rect.collidepoint(event.pos):
                     # Show the file dialog to allow the user to select a file
                     root = tk.Tk()
                     root.withdraw()
@@ -80,8 +84,11 @@ while True:
                 drop_zone_color = drop_zone_highlight_color
             else:
                 drop_zone_color = (130, 130, 130)
-
-
+        if event.type == pygame.MOUSEMOTION:
+            if select_using_file_rect.collidepoint(event.pos):
+                select_using_color = select_using_highlight_color
+            else:
+                select_using_color = (130, 130, 130)
 
         # Handle user events
         if event.type == pygame.USEREVENT:
@@ -89,14 +96,22 @@ while True:
 
     # Clear the screen
     window.fill((100, 100, 100))
-
+    boundry_color = (200,200,200)
     # Draw the drop zone rectangle
     pygame.draw.rect(window, drop_zone_color, drop_zone_rect)
-    pygame.draw.rect(window, (200, 200, 200), drop_zone_rect, 2)
+    pygame.draw.rect(window, boundry_color, drop_zone_rect, 2)
 
     # Draw the text in the drop zone
-    text_rect = text.get_rect(center=drop_zone_rect.center)
-    window.blit(text, text_rect)
+    text_drop_rect = text_drop.get_rect(center=drop_zone_rect.center)
+    window.blit(text_drop, text_drop_rect)
+
+    # Draw the Select using file button
+    pygame.draw.rect(window, select_using_color, select_using_file_rect,)
+    pygame.draw.rect(window, boundry_color, select_using_file_rect, 2)
+
+    #Draw the text in the Select Button
+    text_select_rect = text_select.get_rect(center=select_using_file_rect.center)
+    window.blit(text_select, text_select_rect)
 
     # Update the display
     pygame.display.update()
