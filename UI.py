@@ -13,7 +13,7 @@ win_width = 500
 win_height = 700
 
 rect_start_x = 15
-rect_start_y = 40
+rect_start_y = 50
 
 window = pygame.display.set_mode((win_width, win_height))
 pygame.display.set_caption("Image to ASCII converter")
@@ -44,14 +44,14 @@ def handle_drop_file(file_path):
 
 
 # Set up the button to select using file
-select_using_file_rect = pygame.Rect(15,10,70,20)
+select_using_file_rect = pygame.Rect(15,10,80,30)
 select_using_color = (130, 130, 130)
 select_using_highlight_color = (150, 150, 150)
 
 # Set up the drop zone rectangle
 drop_zone_rect = pygame.Rect(rect_start_x, rect_start_y, 
                              win_width-(rect_start_x*2), 
-                             win_height-(rect_start_y*2))
+                             win_height-(rect_start_y+10))
 drop_zone_color = (130, 130, 130)
 drop_zone_highlight_color = (150, 150, 150)
 
